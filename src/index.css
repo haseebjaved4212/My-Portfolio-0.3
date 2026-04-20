@@ -1,1 +1,159 @@
 @import "tailwindcss";
+
+/* ─── Design Tokens ─────────────────────────────────────────── */
+:root {
+  --bg: #131318;
+  --surface: #131318;
+  --surface-low: #1b1b20;
+  --surface-container: #1f1f25;
+  --surface-high: #2a292f;
+  --surface-highest: #35343a;
+  --surface-bright: #39383e;
+  --surface-lowest: #0e0e13;
+  --primary: #d2bbff;
+  --primary-container: #7c3aed;
+  --secondary: #4cd7f6;
+  --secondary-container: #03b5d3;
+  --on-surface: #e4e1e9;
+  --on-surface-variant: #ccc3d8;
+  --outline-variant: #4a4455;
+  --tertiary: #ffb784;
+
+  --font-body: 'Inter', sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  background: var(--bg);
+  color: var(--on-surface);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--surface-lowest); }
+::-webkit-scrollbar-thumb { background: var(--primary-container); border-radius: 99px; }
+
+/* ─── Selection ─────────────────────────────────────────────── */
+::selection { background: rgba(124, 58, 237, 0.35); color: var(--primary); }
+
+/* ─── Glass Mixin (utility class) ───────────────────────────── */
+.glass {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(74, 68, 85, 0.25);
+  border-radius: 1.5rem;
+  transition: backdrop-filter 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.glass:hover {
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border-color: rgba(74, 68, 85, 0.5);
+  box-shadow: 0 0 40px rgba(124, 58, 237, 0.08);
+}
+
+/* ─── Glow Button ───────────────────────────────────────────── */
+.btn-glow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.5rem;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+.btn-glow.primary {
+  background: var(--primary-container);
+  color: #ede0ff;
+}
+.btn-glow.primary:hover {
+  box-shadow: 0 0 24px rgba(124, 58, 237, 0.6);
+  transform: translateY(-2px);
+}
+.btn-glow.secondary {
+  background: transparent;
+  color: var(--secondary);
+  border: 1px solid rgba(76, 215, 246, 0.3);
+}
+.btn-glow.secondary:hover {
+  background: rgba(76, 215, 246, 0.08);
+  border-color: var(--secondary);
+  transform: translateY(-2px);
+}
+.btn-glow.ghost {
+  background: rgba(255,255,255,0.05);
+  color: var(--on-surface-variant);
+  border: 1px solid rgba(74, 68, 85, 0.4);
+}
+.btn-glow.ghost:hover {
+  background: rgba(255,255,255,0.1);
+  color: var(--on-surface);
+  transform: translateY(-2px);
+}
+
+/* ─── Lume-Chip (skill tag) ─────────────────────────────────── */
+.lume-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.85rem;
+  background: var(--surface-bright);
+  border-left: 2px solid var(--secondary);
+  border-radius: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--on-surface-variant);
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+.lume-chip:hover {
+  background: var(--surface-highest);
+  color: var(--on-surface);
+  border-left-color: var(--primary);
+}
+
+/* ─── Section Heading ───────────────────────────────────────── */
+.section-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--secondary);
+  margin-bottom: 0.5rem;
+}
+.section-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--on-surface);
+  line-height: 1.1;
+}
+
+/* ─── Noise overlay ─────────────────────────────────────────── */
+.noise::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.04;
+}
