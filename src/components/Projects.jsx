@@ -153,11 +153,28 @@ export default function Projects() {
           position: relative;
           display: flex;
           flex-direction: column;
-          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          transition:
+            transform 0.35s cubic-bezier(0.34,1.56,0.64,1),
+            box-shadow 0.35s ease,
+            border-color 0.35s ease;
+          will-change: transform;
         }
         .project-card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+          transform: translateY(-8px) scale(1.01);
+          box-shadow:
+            0 20px 60px rgba(0,0,0,0.4),
+            0 0 0 1px rgba(124,58,237,0.3),
+            0 0 40px rgba(124,58,237,0.12);
+          border-color: rgba(124,58,237,0.4) !important;
+        }
+
+        /* Preview area lift glow */
+        .project-card:hover .project-preview {
+          filter: brightness(1.15);
+          transition: filter 0.35s ease;
+        }
+        .project-preview {
+          transition: filter 0.35s ease;
         }
 
         .project-large { grid-column: span 2; }

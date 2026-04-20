@@ -36,23 +36,7 @@ export default function Navbar() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.15 * i + 0.4, duration: 0.5, ease: 'easeOut' }}
       onClick={() => setMenuOpen(false)}
-      style={{
-        color: 'var(--on-surface-variant)',
-        textDecoration: 'none',
-        fontSize: '0.875rem',
-        fontWeight: 500,
-        padding: '0.4rem 0.75rem',
-        borderRadius: '9999px',
-        transition: 'color 0.2s, background 0.2s',
-      }}
-      onMouseEnter={e => {
-        e.currentTarget.style.color = 'var(--on-surface)'
-        e.currentTarget.style.background = 'rgba(255,255,255,0.06)'
-      }}
-      onMouseLeave={e => {
-        e.currentTarget.style.color = 'var(--on-surface-variant)'
-        e.currentTarget.style.background = 'transparent'
-      }}
+      className="nav-link"
     >
       {l.label}
     </motion.a>
@@ -166,6 +150,44 @@ export default function Navbar() {
       )}
 
       <style>{`
+        /* ── Nav link: sliding underline ── */
+        .nav-link {
+          color: var(--on-surface-variant);
+          text-decoration: none;
+          font-size: 0.875rem;
+          font-weight: 500;
+          padding: 0.45rem 0.75rem;
+          border-radius: 8px;
+          position: relative;
+          transition: color 0.25s ease;
+          overflow: hidden;
+        }
+        .nav-link::after {
+          content: '';
+          position: absolute;
+          bottom: 4px; left: 50%;
+          width: 0; height: 2px;
+          background: linear-gradient(90deg, var(--primary-container), var(--secondary));
+          border-radius: 99px;
+          transform: translateX(-50%);
+          transition: width 0.3s cubic-bezier(0.34,1.56,0.64,1);
+        }
+        .nav-link:hover {
+          color: var(--on-surface);
+        }
+        .nav-link:hover::after {
+          width: calc(100% - 1.5rem);
+        }
+
+        /* ── Logo glow ── */
+        .nav-logo-icon {
+          transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+        .nav-logo-icon:hover {
+          box-shadow: 0 0 28px rgba(124,58,237,0.7) !important;
+          transform: rotate(-5deg) scale(1.08);
+        }
+
         @media (max-width: 768px) {
           .nav-desktop { display: none !important; }
           .nav-mobile-btn { display: flex !important; }

@@ -147,8 +147,24 @@ export default function Skills() {
           font-weight: 500;
           color: var(--on-surface);
           cursor: default;
-          transition: all 0.2s ease;
+          transition:
+            transform 0.25s cubic-bezier(0.34,1.56,0.64,1),
+            box-shadow 0.25s ease,
+            background 0.25s ease,
+            color 0.25s ease,
+            border-left-color 0.25s ease;
           white-space: nowrap;
+          will-change: transform;
+        }
+        .skill-chip:hover {
+          transform: translateY(-4px) scale(1.06);
+          background: var(--surface-bright);
+          color: var(--primary);
+          border-left-color: var(--primary-container);
+          box-shadow:
+            0 6px 20px rgba(124,58,237,0.3),
+            0 0 0 1px rgba(124,58,237,0.2),
+            inset 0 0 12px rgba(124,58,237,0.05);
         }
 
         .skill-badge-learning {
