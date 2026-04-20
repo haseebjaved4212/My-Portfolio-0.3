@@ -1,67 +1,63 @@
-import { useEffect, useRef, useCallback } from 'react'
+import { useEffect, useRef, useCallback } from "react";
 import { motion } from 'framer-motion'
-import gsap from 'gsap'
-import { FiDownload, FiArrowRight } from 'react-icons/fi'
+import gsap from "gsap";
+import { FiDownload, FiArrowRight } from "react-icons/fi";
 
-const tech = ['React.js', 'Next.js', 'Three.js', 'GSAP', 'TypeScript', 'TailwindCSS', 'N8N']
+const tech = [
+  "React.js",
+  "Next.js",
+  "Three.js",
+  "GSAP",
+  "TypeScript",
+  "TailwindCSS",
+  "N8N",
+];
 
 /* ── Letter-split animated name ─────────────────────────────── */
-const NAME = 'Haseeb Javed'
-const LETTER_COLORS = ['#d2bbff', '#4cd7f6', '#ffb784', '#a78bfa', '#34d399', '#f472b6']
+const NAME = "Haseeb Javed";
+const LETTER_COLORS = [
+  "#d2bbff",
+  "#4cd7f6",
+  "#ffb784",
+  "#a78bfa",
+  "#34d399",
+  "#f472b6",
+];
 
 function AnimatedName() {
-  const nameRef = useRef(null)
+  const nameRef = useRef(null);
 
-  const handleEnter = useCallback(() => {
-    const letters = nameRef.current?.querySelectorAll('.name-letter')
-    if (!letters) return
-    gsap.killTweensOf(letters)
+  useEffect(() => {
+    const letters = nameRef.current?.querySelectorAll(".name-letter");
+    if (!letters) return;
     gsap.to(letters, {
-      y: -12,
       WebkitTextFillColor: (i) => LETTER_COLORS[i % LETTER_COLORS.length],
-      scaleX: 1.08,
-      stagger: { amount: 0.35, ease: 'power1.inOut' },
-      duration: 0.28,
-      ease: 'back.out(2)',
-    })
-  }, [])
-
-  const handleLeave = useCallback(() => {
-    const letters = nameRef.current?.querySelectorAll('.name-letter')
-    if (!letters) return
-    gsap.killTweensOf(letters)
-    gsap.to(letters, {
-      y: 0,
-      WebkitTextFillColor: 'transparent',
-      scaleX: 1,
-      stagger: { amount: 0.25, from: 'end' },
-      duration: 0.35,
-      ease: 'power3.out',
-    })
-  }, [])
+      duration: 0.8,
+      stagger: 0.05,
+      ease: "power2.out",
+    });
+  }, []);
 
   return (
     <h1
       ref={nameRef}
       className="hero-name"
-      onMouseEnter={handleEnter}
-      onMouseLeave={handleLeave}
-      style={{ cursor: 'default', userSelect: 'none' }}
+      style={{ cursor: "default", userSelect: "none" }}
     >
-      {NAME.split('').map((char, i) => (
+      {NAME.split("").map((char, i) => (
         <span
           key={i}
           className="name-letter"
           style={{
-            display: 'inline-block',
-            WebkitTextFillColor: 'transparent',
+            display: "inline-block",
+            WebkitTextFillColor: "transparent",
           }}
         >
-          {char === ' ' ? '\u00A0' : char}
+          {char === " " ? "\u00A0" : char}
         </span>
       ))}
     </h1>
-  )
+  );
 }
 
 /* ── Shimmer role text ───────────────────────────────────────── */
@@ -70,49 +66,78 @@ function ShimmerRole() {
     <p className="hero-role shimmer-text">
       Frontend Developer &amp; Creative Coder
     </p>
-  )
+  );
 }
 
 /* ── Main Hero ───────────────────────────────────────────────── */
 export default function Hero() {
-  const containerRef  = useRef(null)
-  const orb1Ref       = useRef(null)
-  const orb2Ref       = useRef(null)
-  const orb3Ref       = useRef(null)
-  const textRef       = useRef(null)
-  const spotlightRef  = useRef(null)
+  const containerRef = useRef(null);
+  const orb1Ref = useRef(null);
+  const orb2Ref = useRef(null);
+  const orb3Ref = useRef(null);
+  const textRef = useRef(null);
+  const spotlightRef = useRef(null);
 
   /* GSAP orbs + text entrance */
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.to(orb1Ref.current, { y: -40, x: 20, duration: 6,  repeat: -1, yoyo: true, ease: 'sine.inOut' })
-      gsap.to(orb2Ref.current, { y:  30, x:-25, duration: 8,  repeat: -1, yoyo: true, ease: 'sine.inOut', delay: 1 })
-      gsap.to(orb3Ref.current, { y: -20, x: 15, duration: 5,  repeat: -1, yoyo: true, ease: 'sine.inOut', delay: 2 })
-      const els = textRef.current?.querySelectorAll('[data-gsap]')
+      gsap.to(orb1Ref.current, {
+        y: -40,
+        x: 20,
+        duration: 6,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
+      gsap.to(orb2Ref.current, {
+        y: 30,
+        x: -25,
+        duration: 8,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+        delay: 1,
+      });
+      gsap.to(orb3Ref.current, {
+        y: -20,
+        x: 15,
+        duration: 5,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+        delay: 2,
+      });
+      const els = textRef.current?.querySelectorAll("[data-gsap]");
       if (els?.length) {
-        gsap.fromTo(els,
+        gsap.fromTo(
+          els,
           { y: 32 },
-          { y: 0, stagger: 0.1, duration: 0.75, ease: 'power3.out', delay: 0.2 }
-        )
+          {
+            y: 0,
+            stagger: 0.1,
+            duration: 0.75,
+            ease: "power3.out",
+            delay: 0.2,
+          },
+        );
       }
-    }, containerRef)
-    return () => ctx.revert()
-  }, [])
+    }, containerRef);
+    return () => ctx.revert();
+  }, []);
 
   /* Cursor spotlight */
   const handleMouseMove = useCallback((e) => {
-    if (!spotlightRef.current || !containerRef.current) return
-    const rect = containerRef.current.getBoundingClientRect()
-    const x = e.clientX - rect.left
-    const y = e.clientY - rect.top
-    spotlightRef.current.style.background =
-      `radial-gradient(600px circle at ${x}px ${y}px, rgba(124,58,237,0.12) 0%, rgba(6,182,212,0.04) 40%, transparent 70%)`
-  }, [])
+    if (!spotlightRef.current || !containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    spotlightRef.current.style.background = `radial-gradient(600px circle at ${x}px ${y}px, rgba(124,58,237,0.12) 0%, rgba(6,182,212,0.04) 40%, transparent 70%)`;
+  }, []);
 
   const handleMouseLeave = useCallback(() => {
-    if (!spotlightRef.current) return
-    spotlightRef.current.style.background = 'transparent'
-  }, [])
+    if (!spotlightRef.current) return;
+    spotlightRef.current.style.background = "transparent";
+  }, []);
 
   return (
     <section
@@ -123,40 +148,81 @@ export default function Hero() {
       onMouseLeave={handleMouseLeave}
     >
       {/* Cursor spotlight layer */}
-      <div ref={spotlightRef} style={{
-        position: 'absolute', inset: 0, pointerEvents: 'none',
-        zIndex: 0, transition: 'background 0.1s ease',
-      }} />
+      <div
+        ref={spotlightRef}
+        style={{
+          position: "absolute",
+          inset: 0,
+          pointerEvents: "none",
+          zIndex: 0,
+          transition: "background 0.1s ease",
+        }}
+      />
 
       {/* Ambient orbs */}
-      <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', overflow: 'hidden' }}>
-        <div ref={orb1Ref} style={{
-          position: 'absolute', top: '10%', left: '60%',
-          width: 500, height: 500, borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(124,58,237,0.18) 0%, transparent 70%)',
-        }} />
-        <div ref={orb2Ref} style={{
-          position: 'absolute', top: '50%', left: '70%',
-          width: 350, height: 350, borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(6,182,212,0.12) 0%, transparent 70%)',
-        }} />
-        <div ref={orb3Ref} style={{
-          position: 'absolute', top: '20%', left: '15%',
-          width: 280, height: 280, borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(124,58,237,0.08) 0%, transparent 70%)',
-        }} />
-        <div style={{
-          position: 'absolute', inset: 0,
-          backgroundImage: 'linear-gradient(rgba(74,68,85,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(74,68,85,0.07) 1px, transparent 1px)',
-          backgroundSize: '60px 60px',
-        }} />
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          pointerEvents: "none",
+          overflow: "hidden",
+        }}
+      >
+        <div
+          ref={orb1Ref}
+          style={{
+            position: "absolute",
+            top: "10%",
+            left: "60%",
+            width: 500,
+            height: 500,
+            borderRadius: "50%",
+            background:
+              "radial-gradient(circle, rgba(124,58,237,0.18) 0%, transparent 70%)",
+          }}
+        />
+        <div
+          ref={orb2Ref}
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "70%",
+            width: 350,
+            height: 350,
+            borderRadius: "50%",
+            background:
+              "radial-gradient(circle, rgba(6,182,212,0.12) 0%, transparent 70%)",
+          }}
+        />
+        <div
+          ref={orb3Ref}
+          style={{
+            position: "absolute",
+            top: "20%",
+            left: "15%",
+            width: 280,
+            height: 280,
+            borderRadius: "50%",
+            background:
+              "radial-gradient(circle, rgba(124,58,237,0.08) 0%, transparent 70%)",
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            backgroundImage:
+              "linear-gradient(rgba(74,68,85,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(74,68,85,0.07) 1px, transparent 1px)",
+            backgroundSize: "60px 60px",
+          }}
+        />
       </div>
 
-      <div className="hero-grid" style={{ position: 'relative', zIndex: 1 }}>
+      <div className="hero-grid" style={{ position: "relative", zIndex: 1 }}>
         {/* Text column */}
         <div ref={textRef} className="hero-text">
           {/* Badge */}
-          <div data-gsap style={{ marginBottom: '1.25rem' }}>
+          <div data-gsap style={{ marginBottom: "1.25rem" }}>
             <span className="hero-badge">
               <span className="hero-badge-dot" />
               Available for Work
@@ -164,7 +230,9 @@ export default function Hero() {
           </div>
 
           <div data-gsap>
-            <p className="hero-greeting">Hi there 👋 I'm</p>
+            <p className="hero-greeting">
+              Hi there <span className="wave-emoji">👋</span> I'm
+            </p>
           </div>
 
           {/* Animated name */}
@@ -180,14 +248,19 @@ export default function Hero() {
           {/* Description */}
           <div data-gsap>
             <p className="hero-desc">
-              I craft immersive digital experiences with cutting-edge technologies.
-              Passionate about beautiful UI, 3D interactions, and AI automation — turning ideas into pixel-perfect reality.
+              I craft immersive digital experiences with cutting-edge
+              technologies. Passionate about beautiful UI, 3D interactions, and
+              AI automation — turning ideas into pixel-perfect reality.
             </p>
           </div>
 
           {/* CTAs */}
           <div data-gsap className="hero-cta">
-            <a href="/My-CV.pdf" download className="btn-glow primary shine-btn">
+            <a
+              href="/My-CV.pdf"
+              download
+              className="btn-glow primary shine-btn"
+            >
               <FiDownload /> Download CV
             </a>
             <a href="#projects" className="btn-glow secondary">
@@ -197,11 +270,23 @@ export default function Hero() {
 
           {/* Tech chips */}
           <div data-gsap>
-            <p style={{ fontSize: '0.72rem', color: 'var(--on-surface-variant)', marginBottom: '0.65rem', opacity: 0.6, letterSpacing: '0.1em' }}>
+            <p
+              style={{
+                fontSize: "0.72rem",
+                color: "var(--on-surface-variant)",
+                marginBottom: "0.65rem",
+                opacity: 0.6,
+                letterSpacing: "0.1em",
+              }}
+            >
               WORKING WITH
             </p>
             <div className="hero-tech-chips">
-              {tech.map(t => <span key={t} className="lume-chip">{t}</span>)}
+              {tech.map((t) => (
+                <span key={t} className="lume-chip">
+                  {t}
+                </span>
+              ))}
             </div>
           </div>
         </div>
@@ -210,26 +295,51 @@ export default function Hero() {
         <motion.div
           initial={{ opacity: 0, scale: 0.8, rotate: -6 }}
           animate={{ opacity: 1, scale: 1, rotate: 0 }}
-          transition={{ duration: 0.9, delay: 0.6, ease: 'easeOut' }}
+          transition={{ duration: 0.9, delay: 0.6, ease: "easeOut" }}
           className="hero-avatar"
-          style={{ position: 'relative' }}
+          style={{ position: "relative" }}
         >
           <div className="glass avatar-card">
             <div className="avatar-circle">HJ</div>
-            <p style={{ fontWeight: 700, fontSize: '1.05rem', color: 'var(--on-surface)' }}>Haseeb Javed</p>
-            <p style={{ fontSize: '0.78rem', color: 'var(--on-surface-variant)', marginTop: '0.25rem' }}>Frontend Developer</p>
+            <p
+              style={{
+                fontWeight: 700,
+                fontSize: "1.05rem",
+                color: "var(--on-surface)",
+              }}
+            >
+              Haseeb Javed
+            </p>
+            <p
+              style={{
+                fontSize: "0.78rem",
+                color: "var(--on-surface-variant)",
+                marginTop: "0.25rem",
+              }}
+            >
+              Frontend Developer
+            </p>
 
             <motion.div
               animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
               className="avatar-badge-top"
-            >✦ React &amp; Next.js</motion.div>
+            >
+              ✦ React &amp; Next.js
+            </motion.div>
 
             <motion.div
               animate={{ y: [0, 8, 0] }}
-              transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
+              transition={{
+                duration: 3.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 0.5,
+              }}
               className="avatar-badge-bottom"
-            >⬡ Three.js &amp; GSAP</motion.div>
+            >
+              ⬡ Three.js &amp; GSAP
+            </motion.div>
           </div>
           <div className="avatar-ring" />
         </motion.div>
@@ -245,7 +355,7 @@ export default function Hero() {
         <span>SCROLL</span>
         <motion.div
           animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
           className="scroll-line"
         />
       </motion.div>
@@ -254,6 +364,24 @@ export default function Hero() {
         @keyframes pulse {
           0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(124,58,237,0.8); }
           50% { opacity: 0.4; box-shadow: 0 0 3px rgba(124,58,237,0.3); }
+        }
+
+        @keyframes wave {
+          0% { transform: rotate(0deg); }
+          10% { transform: rotate(14deg); }
+          20% { transform: rotate(-8deg); }
+          30% { transform: rotate(14deg); }
+          40% { transform: rotate(-4deg); }
+          50% { transform: rotate(10deg); }
+          60% { transform: rotate(0deg); }
+          100% { transform: rotate(0deg); }
+        }
+
+        .wave-emoji {
+          display: inline-block;
+          animation: wave 1.2s ease-in-out infinite;
+          transform-origin: 70% 70%;
+          margin: 0 0.2em;
         }
 
         /* ── Shimmer animation ── */
@@ -448,5 +576,5 @@ export default function Hero() {
         }
       `}</style>
     </section>
-  )
+  );
 }
