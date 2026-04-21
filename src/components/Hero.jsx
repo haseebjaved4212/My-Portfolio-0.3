@@ -250,7 +250,7 @@ export default function Hero() {
             <p className="hero-desc">
               I craft immersive digital experiences with cutting-edge
               technologies. Passionate about beautiful UI, 3D interactions, and
-              AI automation — turning ideas into pixel-perfect reality.
+              AI automation, turning ideas into pixel-perfect reality.
             </p>
           </div>
 
